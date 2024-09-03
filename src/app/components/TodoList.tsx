@@ -1,77 +1,63 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import TodoItem, { TodoItemProps } from "./TodoItem";
+import TodoItem, { Todo } from "./TodoItem";
 import AddTodoForm from "./AddTodoForm";
 import TodoFilter from "./TodoFilter";
 
-// Interface para a estrutura do item Todo
-interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
-}
-
-const TodoListContainer = styled.div`
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-// Componente TodoList: Gerencia a lista de tarefas
-const TodoList: React.FC = () => {
-  // Estado para as tarefas e filtro
+const TodoList = (): JSX.Element => {
   const [todos, setTodos] = useState<Todo[]>([
-    // Tarefas iniciais
+    // Initial tasks
     { id: 1, text: "Tarefa 1", completed: false },
     { id: 2, text: "Tarefa 2", completed: true },
   ]);
   const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
 
-  // Função para adicionar uma nova tarefa
-  const addTodo = (text: string, status: "active" | "completed") => {
-    const newTodo: Todo = {
+  // Function to add a new task
+  const addTask = (text: string, status: "active" | "completed") => {
+    const newTask: Todo = {
       id: todos.length + 1,
-      text,
+      text: text,
       completed: status === "completed",
     };
-    setTodos([...todos, newTodo]);
+    setTodos([...todos, newTask]);
   };
 
-  // Função para alternar o status de conclusão da tarefa
-  const toggleTodo = (id: number) => {
+  // Function to toggle the completion status of a task
+  const toggleTask = (id: number) => {
     setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      todos.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
   };
 
-  // Filtrar tarefas com base no filtro atual
-  const filteredTodos = todos.filter((todo) => {
-    if (filter === "active") return !todo.completed;
-    if (filter === "completed") return todo.completed;
+  // Filter tasks based on the current filter
+  const filteredTasks = todos.filter((task) => {
+    if (filter === "active") return !task.completed;
+    if (filter === "completed") return task.completed;
     return true;
   });
 
-  // ... retorno existente ...
+  // Component rendering
   return (
-    <TodoListContainer>
-      <AddTodoForm onAdd={addTodo} />
-      <TodoFilter filter={filter} setFilter={setFilter} />
-      {filteredTodos.map((todo) => (
+    <div className="max-w-2xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
+      <AddTodoForm onAdd={addTask} />
+      <TodoFilter
+        filter={filter}
+        setFilter={setFilter}
+        filterLabels={{
+          all: "Todas",
+          active: "Ativas",
+          completed: "Concluídas",
+        }}
+      />
+      {filteredTasks.map((task) => (
         <TodoItem
-          key={todo.id}
-          todo={todo}
-          onToggle={() => toggleTodo(todo.id)}
+          key={task.id}
+          todo={task}
+          onToggle={() => toggleTask(task.id)}
         />
       ))}
-    </TodoListContainer>
+    </div>
   );
 };
 
