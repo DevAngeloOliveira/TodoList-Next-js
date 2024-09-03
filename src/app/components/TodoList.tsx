@@ -34,21 +34,45 @@ const TodoList: React.FC = () => {
   const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
 
   // Função para adicionar uma nova tarefa
-  const addTodo = (text: string) => {
-    // ... código existente de addTodo ...
+  const addTodo = (text: string, status: "active" | "completed") => {
+    const newTodo: Todo = {
+      id: todos.length + 1,
+      text,
+      completed: status === "completed",
+    };
+    setTodos([...todos, newTodo]);
   };
 
   // Função para alternar o status de conclusão da tarefa
   const toggleTodo = (id: number) => {
-    // ... código existente de toggleTodo ...
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
   };
 
   // Filtrar tarefas com base no filtro atual
   const filteredTodos = todos.filter((todo) => {
-    // ... código existente de filteredTodos ...
+    if (filter === "active") return !todo.completed;
+    if (filter === "completed") return todo.completed;
+    return true;
   });
 
   // ... retorno existente ...
+  return (
+    <TodoListContainer>
+      <AddTodoForm onAdd={addTodo} />
+      <TodoFilter filter={filter} setFilter={setFilter} />
+      {filteredTodos.map((todo) => (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          onToggle={() => toggleTodo(todo.id)}
+        />
+      ))}
+    </TodoListContainer>
+  );
 };
 
 export default TodoList;
