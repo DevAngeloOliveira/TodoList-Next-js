@@ -5,13 +5,13 @@ import TodoFilter from "./TodoFilter";
 
 const TodoList = (): JSX.Element => {
   const [todos, setTodos] = useState<Todo[]>([
-    // Initial tasks
+    // Default tasks
     { id: 1, text: "Tarefa 1", completed: false },
     { id: 2, text: "Tarefa 2", completed: true },
   ]);
   const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
 
-  // Function to add a new task
+  // Função para adicionar uma nova tarefa
   const addTask = (text: string, status: "active" | "completed") => {
     const newTask: Todo = {
       id: todos.length + 1,
@@ -30,14 +30,14 @@ const TodoList = (): JSX.Element => {
     );
   };
 
-  // Filter tasks based on the current filter
+  // Função para filtrar as tarefas
   const filteredTasks = todos.filter((task) => {
     if (filter === "active") return !task.completed;
     if (filter === "completed") return task.completed;
     return true;
   });
 
-  // Component rendering
+  // Renderização do componente
   return (
     <div className="w-full max-w-2xl mx-auto p-2 sm:p-4 md:p-6 bg-gray-100 rounded-lg shadow-md">
       <div className="mb-2 sm:mb-4">
