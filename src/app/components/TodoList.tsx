@@ -21,7 +21,7 @@ const TodoList = (): JSX.Element => {
     setTodos([...todos, newTask]);
   };
 
-  // Function to toggle the completion status of a task
+  // Função para alternar o status de conclusão de uma tarefa
   const toggleTask = (id: number) => {
     setTodos(
       todos.map((task) =>
