@@ -13,15 +13,15 @@ export interface TodoItemProps {
 
 const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle }) => {
   return (
-    <div className="flex items-center p-3 bg-white rounded shadow mb-2">
+    <div className="flex items-center p-2 sm:p-3 bg-white rounded shadow mb-1 sm:mb-2">
       <input
         type="checkbox"
         checked={todo.completed}
         onChange={onToggle}
-        className="mr-3"
+        className="mr-2 sm:mr-3"
       />
       <span
-        className={`${
+        className={`text-sm sm:text-base ${
           todo.completed ? "line-through text-gray-500" : "text-gray-800"
         }`}
       >

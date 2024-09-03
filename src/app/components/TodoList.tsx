@@ -39,24 +39,30 @@ const TodoList = (): JSX.Element => {
 
   // Component rendering
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
-      <AddTodoForm onAdd={addTask} />
-      <TodoFilter
-        filter={filter}
-        setFilter={setFilter}
-        filterLabels={{
-          all: "Todas",
-          active: "Ativas",
-          completed: "Concluídas",
-        }}
-      />
-      {filteredTasks.map((task) => (
-        <TodoItem
-          key={task.id}
-          todo={task}
-          onToggle={() => toggleTask(task.id)}
+    <div className="w-full max-w-2xl mx-auto p-2 sm:p-4 md:p-6 bg-gray-100 rounded-lg shadow-md">
+      <div className="mb-2 sm:mb-4">
+        <AddTodoForm onAdd={addTask} />
+      </div>
+      <div className="mb-2 sm:mb-4">
+        <TodoFilter
+          filter={filter}
+          setFilter={setFilter}
+          filterLabels={{
+            all: "Todas",
+            active: "Ativas",
+            completed: "Concluídas",
+          }}
         />
-      ))}
+      </div>
+      <div className="space-y-1 sm:space-y-2">
+        {filteredTasks.map((task) => (
+          <TodoItem
+            key={task.id}
+            todo={task}
+            onToggle={() => toggleTask(task.id)}
+          />
+        ))}
+      </div>
     </div>
   );
 };

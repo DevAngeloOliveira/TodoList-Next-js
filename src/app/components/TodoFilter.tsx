@@ -18,11 +18,11 @@ const TodoFilter: React.FC<TodoFilterProps> = ({
   filterLabels,
 }) => {
   return (
-    <div className="flex justify-center mb-4">
+    <div className="flex flex-wrap justify-center mb-2 sm:mb-4">
       {(["all", "active", "completed"] as const).map((f) => (
         <button
           key={f}
-          className={`px-3 py-1 mx-1 text-sm rounded ${
+          className={`px-2 sm:px-3 py-1 m-1 text-xs sm:text-sm rounded ${
             filter === f
               ? "bg-green-500 text-white"
               : "bg-gray-200 text-gray-700 hover:bg-gray-300"
